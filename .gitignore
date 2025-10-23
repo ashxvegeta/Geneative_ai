@@ -1,1 +1,5 @@
 .env
+secretkey.py
+venv/
+__pycache__/
+*.pyc
