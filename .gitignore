@@ -1,5 +1,6 @@
 .env
 secretkey.py
 venv/
+venv310/
 __pycache__/
 *.pyc
