@@ -18,6 +18,7 @@ length_input = st.selectbox("Select Explanation Length", ["Short (1-2 paragraphs
 
 # template for dynamic prompt
 template = PromptTemplate(
+  
     template="""Please summarize the research paper titled "{paper_input}" with the following specifications:
 Explanation Style: {style_input}
 Explanation Length: {length_input}
@@ -29,7 +30,8 @@ Explanation Length: {length_input}
 If certain information is not available in the paper, respond with: "Insufficient information available" instead of guessing.
 Ensure the summary is clear, accurate, and aligned with the provided style and length.
 """,
-input_variables=["paper_input", "style_input", "length_input"]
+input_variables=["paper_input", "style_input"],// suppose u have forget to put the prameter length_input "length_input"
+validate_template=True,//for validating the template
 )
 
 # placeholder for output
