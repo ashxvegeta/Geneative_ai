@@ -20,12 +20,11 @@ length_input = st.selectbox("Select Explanation Length", ["Short (1-2 paragraphs
 
 # load the dynaic prompt
 template = load_prompt("template.json")  
-
-# placeholder for output
-prompt = template.invoke({"paper_input": paper_input, "style_input": style_input, "length_input": length_input})
+# initialize the model
+model = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
 
 if st.button('Summarize'):
-    model = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
-    result  = model.invoke(prompt)
+    chain = template | model
+    result = chain.invoke({"paper_input": paper_input, "style_input": style_input, "length_input": length_input})
     st.write(result.content)
 
