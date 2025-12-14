@@ -1,10 +1,10 @@
 from  pydantic import BaseModel
 
 class Student(BaseModel):
-    name: str
+    name: str = "John Doe"
    
 # Creating raw input data (dictionary)
-new_student = {'name': 32}
+new_student = {}
 
 # Creating a Student object from the dictionary
 Student = Student(**new_student)
