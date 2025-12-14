@@ -14,6 +14,7 @@ class Review(TypedDict):
    sentiment: Annotated[Literal["Pos", "Neg"], "The sentiment of the review either Positive, Negative, or Neutral"]
    pros: Annotated[Optional[list[str]], "Write down all the  pros mentioned in the review inside a list"]
    cons: Annotated[Optional[list[str]], "Write down all the cons mentioned in the review inside a list"]
+   name: Annotated[Optional[str], "Write the name of the reviewer if mentioned in the review"]
 
 # create a structured model with the Review schema
 structured_model = model.with_structured_output(Review)
@@ -36,11 +37,13 @@ S-Pen support is unique and useful I
 Cons:
 Bulky and heavy-not great for one-handed use
 Bloatware still exists in One UI
-Expensive compared to competitors""")
+Expensive compared to competitors
+Rewiewed by: Alex J.""")
 
 # print(result)
 # Output will be a dictionary following the Review schema
 
 # u can access individual fields
 # print("Summary:", result['summary'])
-print("Sentiment:", result['sentiment'])
+# print("Sentiment:", result['sentiment'])
+print(result['name'])
