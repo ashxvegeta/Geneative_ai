@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
-from typing import TypedDict,Annotated,Optional
+from typing import TypedDict,Annotated,Optional,Literal
 load_dotenv()
 
 model = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
@@ -11,7 +11,7 @@ class Review(TypedDict):
    # now its not only str but also has a description
    summary: Annotated[str, "A Brief summary of the review"]
    # now its not only str but also has a description
-   sentiment: Annotated[str, "The sentiment of the review either Positive, Negative, or Neutral"]
+   sentiment: Annotated[Literal["Pos", "Neg"], "The sentiment of the review either Positive, Negative, or Neutral"]
    pros: Annotated[Optional[list[str]], "Write down all the  pros mentioned in the review inside a list"]
    cons: Annotated[Optional[list[str]], "Write down all the cons mentioned in the review inside a list"]
 
@@ -38,9 +38,9 @@ Bulky and heavy-not great for one-handed use
 Bloatware still exists in One UI
 Expensive compared to competitors""")
 
-print(result)
+# print(result)
 # Output will be a dictionary following the Review schema
 
 # u can access individual fields
-print("Summary:", result['summary'])
+# print("Summary:", result['summary'])
 print("Sentiment:", result['sentiment'])
