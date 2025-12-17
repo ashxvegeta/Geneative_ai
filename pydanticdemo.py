@@ -5,7 +5,7 @@ class Student(BaseModel):
     age: Optional[int] = None
    
 # Creating raw input data (dictionary)
-new_student = {}
+new_student = {"age": 20}
 
 # Creating a Student object from the dictionary
 Student = Student(**new_student)
