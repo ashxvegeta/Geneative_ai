@@ -5,7 +5,8 @@ class Student(BaseModel):
     age: Optional[int] = None
    
 # Creating raw input data (dictionary)
-new_student = {"age": 20}
+# here u can see age is string but pydantic will convert it to int so this is called type coercion and in output age will be int
+new_student = {"age": "20"}
 
 # Creating a Student object from the dictionary
 Student = Student(**new_student)
