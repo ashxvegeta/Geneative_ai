@@ -12,6 +12,9 @@ new_student = {"age": "20" , "email": "ashu@gmail.com"}
 
 # Creating a Student object from the dictionary
 Student = Student(**new_student)
-print(Student)  # Output: John Doe
+
+# converting the Student object back to a dictionary
+Student_dict = dict(Student)
+print(Student_dict)  
 
 
