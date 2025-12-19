@@ -14,7 +14,5 @@ new_student = {"age": "20" , "email": "ashu@gmail.com"}
 Student = Student(**new_student)
 
 # converting the Student object back to a dictionary
-Student_dict = dict(Student)
-print(Student_dict)  
-
-
+Student_json = Student.model_dump_json()
+print(Student_json)  
