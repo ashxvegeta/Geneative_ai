@@ -1,14 +1,11 @@
-from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 load_dotenv()
 
-llm = HuggingFaceEndpoint(
-    repo_id="TinyLlama/TinyLlama-1-1B-Chat-v1",
-    task="text-generation",
-)
 
-model = ChatHuggingFace(llm=llm,temperature=0)
+
+model = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 
 # 1st prompt
 templete1= PromptTemplate(
@@ -19,7 +16,7 @@ templete2= PromptTemplate(
     template='write a 5 line summery on the following text./n {text}',
     input_variables=['text'])
 
-prompt1 = templete1.invoke(topic="climate change")
+prompt1 = templete1.invoke({"topic": "climate change"})
 result = model.invoke(prompt1)
 prompt2 = templete2.invoke({'text': result.content})
 result2 = model.invoke(prompt2)
