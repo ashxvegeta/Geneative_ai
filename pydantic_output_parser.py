@@ -1,45 +1,36 @@
-from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
+from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
-from dotenv import load_dotenv
-
 load_dotenv()
 
-# IMPORTANT: conversational task
 llm = HuggingFaceEndpoint(
-    repo_id="HuggingFaceH4/zephyr-7b-beta",
+     repo_id="HuggingFaceH4/zephyr-7b-beta",
     task="conversational",
-    temperature=0,
-    max_new_tokens=200,
 )
+model = ChatHuggingFace(llm=llm,temperature=0)
 
-chat_model = ChatHuggingFace(llm=llm)
-
+#main task
+# create a pydantic object that will works as schema for output parser
 class Person(BaseModel):
-    name: str
-    age: int = Field(gt=18)
-    city: str
+    name: str = Field(description="The name of the fictional person")
+    age: int = Field(gt=18, description="The age of the fictional person")
+    city: str = Field(description="The city where the fictional person lives")
 
+# create the pydantic output parser my pydantic object is person class object
 parser = PydanticOutputParser(pydantic_object=Person)
-
-prompt = PromptTemplate(
-    template=(
-        "Give the name, age, and city of a fictional {place} person.\n"
-        "{format_instructions}"
-    ),
+ 
+template = PromptTemplate(
+    template="give me the name, age and city of a fictional {place} person\n{format_instructions}",
     input_variables=["place"],
-    partial_variables={"format_instructions": parser.get_format_instructions()},
+    partial_variables={"format_instructions": parser.get_format_instructions()}
 )
 
-final_prompt = prompt.invoke({"place": "Italian"})
+prompt = template.invoke({"place": "Italian"})
 
-# 🔥 DO NOT use to_string()
-response = chat_model.invoke(final_prompt)
+result = model.invoke(prompt)
 
-result = parser.parse_with_prompt(
-    response.content,
-    final_prompt
-)
+final_result = parser.parse(result.content)
 
-print(result)
+print("Parsed Output:", final_result)
