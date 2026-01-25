@@ -25,10 +25,8 @@ templete= PromptTemplate(
     partial_variables={"fomat_instructions": parser.get_format_instructions()}
 )
 
-prompt = templete.invoke({"topic": "climate change"})
+chain = templete | model | parser
 
-result = model.invoke(prompt)
+result = chain.invoke({"topic": "climate change"})
 
-final_result = parser.parse(result.content)
-
-print("Final Result:", final_result)
+print("Final Result:", result)
