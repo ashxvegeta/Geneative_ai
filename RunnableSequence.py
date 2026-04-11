@@ -7,7 +7,7 @@ from langchain_core.runnables import RunnableSequence
 load_dotenv()
 
 # Prompt
-prompt = PromptTemplate(
+prompt1 = PromptTemplate(
     template="Tell me a joke about {topic}.",
     input_variables=["topic"]
 )
@@ -18,8 +18,14 @@ llm = ChatOpenAI()
 # Parser
 parser = StrOutputParser()
 
+
+#second prompt
+prompt2 = PromptTemplate(
+    template="explain the following joke - {text}.",
+    input_variables=["text"]
+)
 # Chain (modern way)
-chain = RunnableSequence(prompt, llm, parser)
+chain = RunnableSequence(prompt1, llm, parser, prompt2, llm, parser)
 
 # Run
 result = chain.invoke({"topic": "programming"})
